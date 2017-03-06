@@ -1,0 +1,21 @@
+{% extends 'TuesQuestionnaire/base.html' %}
+
+{% block main-content %}
+    <h2 class="page-header">{{ course.name }}</h2>
+    <h4>Start date: {{ course.start_date.date }}</h4>
+    <h4>End date: {{ course.end_date.date }}</h4>
+
+    <br>
+
+    {% if course.assignment_set.all %}
+        <h4>Assignments</h4>
+        {% for assignment in assignments %}
+            <a href="{% url 'assignment_details' assignment_id=assignment.id %}" style="display: inline">{{ assignment }}</a>
+            <p style="display: inline"> - Due: {{ assignment.due_date.date }}</p>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <h4>This course has no assignments</h4>
+    {% endif %}
+
+{% endblock %}

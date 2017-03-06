@@ -1,0 +1,29 @@
+{% extends 'TuesQuestionnaire/base.html' %}
+
+{% block main-content %}
+    <h2 class="page-header">{{ assignment.name }}</h2>
+    <h4>Due: {{ assignment.due_date }}</h4>
+    {% if not ended %}
+    <h4>Remaining: {{ assignment.due_date|timeuntil }}</h4>
+    {% endif %}
+    <br>
+
+    {% if attempts %}
+        <h4>Attempts:</h4>
+        {% for attempt in attempts %}
+            <p>Attempt finished at {{ attempt.end_time }} : {{ attempt.get_score }}/{{ assignment.get_max_points }}
+                <a href="{% url 'attempt_results' attempt_id=attempt.id %}">View details</a></p>
+        {% endfor %}
+    {% else %}
+        <p>You haven't attempted this assignment yet.</p>
+    {% endif %}
+
+    <br>
+    <p>This assignment has {{ assignment.get_questions_count }} questions</p>
+    <p>Maximum points: {{ assignment.get_max_points }}</p>
+
+    {% if not ended and left_attempts > 0 %}
+        <h4>You have {{ left_attempts }} attempts left</h4>
+        <a href="{% url 'start_attempt' assignment_id=assignment.id %}" class="btn btn-primary">Attempt</a>
+    {% endif %}
+{% endblock %}

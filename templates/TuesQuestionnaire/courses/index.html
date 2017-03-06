@@ -1,0 +1,64 @@
+{% extends 'TuesQuestionnaire/base.html' %}
+
+{% block main-content %}
+    <h2 class="page-header">Courses</h2>
+    {% if user.is_authenticated %}
+        {% if not user.userprofile.is_teacher %}
+            {% if user_courses %}
+                <h4>Your courses</h4>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Course</th>
+                        <th>Start date</th>
+                        <th>End date</th>
+                        <th>Teacher</th>
+                        <th>Course Page</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for course in user_courses %}
+                        <tr>
+                            <td>{{ course.name }}</td>
+                            <td>{{ course.start_date }}</td>
+                            <td>{{ course.end_date }}</td>
+                            <td>{{ course.creator }}</td>
+                            <td>
+                                <a class="btn btn-primary" href="{% url 'course_details' course_id=course.id%}">Course page</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+            {% if other_courses %}
+                <h4>Other courses</h4>
+                <p>(click a course to enroll)</p>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Course</th>
+                        <th>Start date</th>
+                        <th>End date</th>
+                        <th>Teacher</th>
+                        <th>Enroll</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for course in other_courses %}
+                        <tr>
+                            <td>{{ course.name }}</td>
+                            <td>{{ course.start_date }}</td>
+                            <td>{{ course.end_date }}</td>
+                            <td>{{ course.creator }}</td>
+                            <td>
+                                <a class="btn btn-primary" href="{% url 'course_enroll' course_id=course.id%}">Enroll</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endblock %}

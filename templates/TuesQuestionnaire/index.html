@@ -1,0 +1,14 @@
+{% extends 'TuesQuestionnaire/base.html' %}
+
+{% block main-content %}
+    <h2 class="page-header">Welcome to TUES Questionnaire</h2>
+    {% if user.is_authenticated %}
+        {% if not user.userprofile %}
+            <h4>Are you a student or a teacher?</h4>
+            <a href="{% url 'choose_role' %}?role=1" class="btn btn-primary">Student</a>
+            <a href="{% url 'choose_role' %}?role=2" class="btn btn-danger">Teacher</a>
+        {% else %}
+            Are you ready to learn? Click courses to enroll to a new course.
+        {% endif %}
+    {% endif %}
+{% endblock %}

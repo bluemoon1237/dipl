@@ -1,0 +1,30 @@
+{% extends 'TuesQuestionnaire/base.html' %}
+
+{% block main-content %}
+    <h2 class="page-header">Student results for {{ assignment_name }}</h2>
+    <h2></h2>
+    <a href="?best_only=1" class="btn btn-default">Show Best Only</a>
+    <a href="?best_only=0" class="btn btn-default">Show All</a>
+    <br>
+    <br>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Student</th>
+            <th>Points</th>
+            <th>Finished at</th>
+            <th>Details</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for attempt in attempts %}
+            <tr>
+                <td>{{ attempt.user }}</td>
+                <td>{{ attempt.get_score }}</td>
+                <td>{{ attempt.end_time }}</td>
+                <td><a href="{% url 'attempt_results' attempt_id=attempt.id %}">View details</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'TuesQuestionnaire/base.html' %}
+
+{% block styles %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "TuesQuestionnaire/css/attempt.css" %}"/>
+{% endblock %}
+
+{% block main-content %}
+    <input type="hidden" name="attempt_id" value="{{ attempt.id }}"/>
+    <h2 class="page-header">{{ assignment.name }}</h2>
+    <h4 class="pull-left">Started at: {{ attempt.start_time }}</h4>
+    <h4 class="pull-right">Max points: {{ assignment.get_max_points }}</h4>
+    <div class="clearfix"></div>
+    <h4 class="pull-left">You have time until: {{ attempt.end_time }}</h4>
+    <div class="clearfix"></div>
+    <div id="questionDiv">
+{#{% include 'TuesQuestionnaire/attempts/attempt-question.html' with question=question question_count=assignment.get_questions_count marked_answers=marked_answers%}#}
+    </div>
+    <div id="questionPages" class="pull-left" style="display: inline;"></div>
+    <div class="pull-right"><button class="btn btn-primary" onclick="onFinishClick()">Finish</button></div>
+{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script type="text/javascript" src="{% static "TuesQuestionnaire/js/jquery.twbsPagination.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "TuesQuestionnaire/js/attempt.js" %}"></script>
+    <script>
+        setUp({{ assignment.get_questions_count }});
+    </script>
+{% endblock %}

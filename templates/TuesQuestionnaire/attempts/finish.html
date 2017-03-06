@@ -1,0 +1,6 @@
+{% extends 'TuesQuestionnaire/base.html' %}
+
+{% block main-content %}
+    <h2 class="page-header">Attempt finished</h2>
+    <a href="{% url 'attempt_results' attempt_id=attempt_id %}">Click here to see your results</a>
+{% endblock %}

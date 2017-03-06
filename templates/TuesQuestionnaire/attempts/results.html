@@ -1,0 +1,40 @@
+{% extends 'TuesQuestionnaire/base.html' %}
+
+{% block styles %}
+    <style>
+        .green{
+            color: green;
+        }
+        .red{
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block main-content %}
+    <h2 class="page-header">Results for {{ result_view.assignment_name }}</h2>
+    <h4>Student: {{ result_view.user}}</h4>
+    <h4>Score: {{ result_view.score }} out of {{ result_view.max_score }} points</h4>
+    <h5>Started attempt at: {{ result_view.started_at }}</h5>
+    <h5>Attempt time: {{ result_view.took_time }}</h5>
+    <br>
+    <h4>Results</h4>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Question</th>
+            <th>Correct</th>
+            <th>Points</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for question, correct in result_view.question_results %}
+            <tr>
+                <td>{{ question.body }}</td>
+                <td><span class="glyphicon {% if correct %} glyphicon-ok green{% else %} glyphicon-remove red{% endif %}"></span></td>
+                <td>{{ question.points }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

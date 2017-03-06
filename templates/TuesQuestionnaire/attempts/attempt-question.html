@@ -1,0 +1,22 @@
+<input type="hidden" name="question_id" value="{{ question.id }}"/>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class=" pull-left" >Question {{ curr_question }} out of {{ question_count }}</h4>
+        <h4  class="pull-right">{{ question.points }} points</h4>
+        <div class="clearfix"></div>
+    </div>
+    <div class="panel-body" id="questionAnswersDiv">
+    <h4>{{  question.body }}</h4>
+    <hr>
+    {% for answer in question.answers %}
+            <div class="checkbox">
+                <label><input
+                        type="{% if question.multiple %}checkbox{% else %}radio{% endif %}"
+                        name="answer"
+                        value="{{ answer.id }}"
+                        {% if answer.id in marked_answers %}checked{% endif %}> {{ answer.text }}</label>
+            </div>
+    {% endfor %}
+    </div>
+</div>

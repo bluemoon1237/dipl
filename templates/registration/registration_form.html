@@ -1,0 +1,14 @@
+{% extends 'TuesQuestionnaire/base.html' %}
+
+{% block main-content %}
+<form action="/accounts/register/" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="form-group">
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+        </div>
+    {% endfor %}
+    <input type="submit" value="Submit" class="btn btn-primary"/>
+</form>
+{% endblock %}

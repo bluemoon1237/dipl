@@ -1,0 +1,11 @@
+Hello,
+
+You have been registered in the site TUES Questionnaire.
+To activate your account click on this link:
+http://127.0.0.1/accounts/activate/{{ activation_key }}/
+
+This link expires in {{ expiration_days }} days.
+
+If you haven't registered in TUES Questionnaire, please delete this e-mail.
+
+Thank you.
