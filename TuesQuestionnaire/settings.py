@@ -81,7 +81,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'OPTIONS': {
-            'read_default_file': '/home/rokner/nedkov-db.cnf',
+            'read_default_file': '/home/nedkov/Desktop/TuesQuestionnaire/tq-db.cnf',
             'sql_mode': 'traditional',
         }
     }
