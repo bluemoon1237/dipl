@@ -112,7 +112,7 @@ class Assignment(models.Model):
         return self.name
 
 
-class ModifiedQuestionVIew:
+class ModifiedQuestionView:
     def __init__(self, id, body, points, answers, category, multiple):
         self.id = id
         self.body = body
@@ -148,7 +148,7 @@ class Attempt(models.Model):
         question = questions[question_numb - 1]
         answers = list(question.answer_set.all())
         random.shuffle(answers)
-        view_question = ModifiedQuestionVIew(question.id,
+        view_question = ModifiedQuestionView(question.id,
                                              question.body,
                                              question.points,
                                              answers,
@@ -162,26 +162,18 @@ class Attempt(models.Model):
             for answer in answers:
                 attempt_answer = AttemptAnswer(attempt=self, real_answer_id=answer)
                 attempt_answer.save()
-            return True
-
-        return False
 
     def get_marked_answers(self, question_id):
         return [a.real_answer_id for a in self.answers.all() if a.real_answer.question_id == question_id]
 
     def check_time(self):
-        if self.end_time < timezone.now():
-            self.finished = True
-            self.save()
-            return False
-        return True
+        return not self.end_time < timezone.now()
 
     def finish(self):
         if not self.finished:
-            if self.check_time():
-                self.end_time = timezone.now()
-                self.finished = True
-                self.save()
+            self.end_time = timezone.now()
+            self.finished = True
+            self.save()
 
     def get_result(self):
         return ResultView(score=self.get_score(),
@@ -206,13 +198,15 @@ class Attempt(models.Model):
     def is_answered_correctly(self, question):
         correct = True
         answer_ids = [a.real_answer_id for a in self.answers.all()]
-        print(answer_ids)
         for answer in question.answer_set.all():
-            if answer.is_correct and answer.id not in answer_ids:
-                correct = False
-                break
+            if answer.is_correct:
+                if answer.id in answer_ids:
+                    answer_ids.remove(answer.id)
+                else:
+                    correct = False
+                    break
 
-        return correct
+        return correct and not answer_ids
 
 
 class AttemptAnswer(models.Model):

@@ -58,8 +58,6 @@ function sendAnswers(answers, newQuestion) {
         newQuestion: newQuestion
     };
 
-    console.log(data_to_send);
-
     $.post({
         url:'/attempt/answers',
         data: data_to_send,
@@ -73,9 +71,8 @@ function sendAnswers(answers, newQuestion) {
                     window.location.replace(data.url);
                     break;
             }
-            console.log(data);
         }
-    })
+    });
 }
 
 function activateLoader(){

@@ -57,6 +57,7 @@ class QuestionAdmin(TeacherModelAdmin):
     ]
 
     inlines = [AnswerInline]
+    list_filter = ['category']
 
 
 class QuestionInline(TeacherInline):

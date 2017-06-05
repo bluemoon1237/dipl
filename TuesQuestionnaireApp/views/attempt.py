@@ -19,8 +19,6 @@ def start_attempt(request, assignment_id):
         attempt = chosen_assignment.get_curr_user_attempt(request.user)
 
         if attempt is None:
-            print(timezone.now() + datetime.timedelta(minutes=chosen_assignment.time_limit))
-            print(chosen_assignment.time_limit)
             attempt = Attempt(assignment=chosen_assignment,
                               start_time=timezone.now(),
                               user=request.user,
@@ -39,7 +37,6 @@ def start_attempt(request, assignment_id):
                    'curr_question': curr_question,
                    'marked_answers': attempt.get_marked_answers(question.id)}
 
-        render
         return render(request, 'TuesQuestionnaire/attempts/attempt.html', context)
 
 
